@@ -1,4 +1,4 @@
-$puppetscript = @(PUPPETSCRIPT)
+$puppetscript = @("PUPPETSCRIPT"/L)
 #!/bin/bash
 set -e
 set -x
@@ -12,11 +12,11 @@ librarian-puppet intall --path=/etc/puppet/modules
 
 puppet apply --verbose --modulepath=/etc/puppet/modules /etc/puppet/manifests/site.pp
 
-PUPPETSCRIPT
+| PUPPETSCRIPT
 
 node default {
     file { '/usr/local/bin/puppet.sh':
-        content     => $puppetscript,
+        contents    => $puppetscript,
         ensure      => file,
         mode        => "0755",
     }
