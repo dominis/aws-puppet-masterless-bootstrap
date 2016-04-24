@@ -8,9 +8,9 @@ git reset
 git checkout .
 git pull origin master
 
-librarian-puppet intall --path=/etc/puppet/modules
+librarian-puppet install --path=/etc/puppet/modules
 
-puppet apply --verbose --modulepath=/etc/puppet/modules /etc/puppet/manifests/site.pp
+puppet apply --verbose --modulepath=/etc/puppet/modules /etc/puppet/site.pp
 
 PUPPETSCRIPT
 
@@ -29,8 +29,10 @@ node default {
     ensure  => absent,
   }
 
-  file { '/etc/facter/facts.d':
-    ensure  => directory,
-    recurse => true,
+  file { [
+    '/etc/facter',
+    '/etc/facter/facts.d',
+    ]:
+      ensure  => directory,
   }
 }
