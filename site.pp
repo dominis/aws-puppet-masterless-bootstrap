@@ -24,4 +24,13 @@ node default {
     cron { 'run puppet':
         command => "/usr/local/bin/puppet.sh"
     }
+
+    file { '/etc/puppet':
+        ensure  => absent,
+    }
+
+    file { '/etc/facter/facts.d':
+        ensure  => directory,
+        recurse => true,
+    }
 }

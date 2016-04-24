@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -x
 sudo apt-get update
 sudo apt-get dist-upgrade -u -y
 sudo apt-get install ec2-api-tools ruby ruby-dev gcc make -y
@@ -12,22 +12,21 @@ Host *
  LogLevel=quiet
 EOF
 
-sudo cp ~/.ssh/config /root/.ssh/
-sudo cp ~/.ssh/id_rsa /root/.ssh/
+sudo mv /home/ubuntu/.ssh/config /root/.ssh/
+sudo mv /home/ubuntu/.ssh/id_rsa /root/.ssh/
+sudo chown root:root /root/.ssh/id_rsa
+sudo chmod 600 /root/.ssh/id_rsa
 
 sudo puppet apply --verbose /tmp/bootstrap/site.pp
-rm -rf /etc/puppet
 
-instance_id=$(ec2metadata --instance-id)
-region=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}')
-tags=$(ec2-describe-tags --filter "resource-id=${instance_id}" --region ${region})
+INSTANCE_ID=$(ec2metadata --instance-id)
+REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}')
+ec2-describe-tags --filter "resource-id=${INSTANCE_ID}" --region ${REGION} > /tmp/ec2-tags
 
-config_url=$(echo ${tags}|grep Config|cut -f5)
-role=$(echo ${tags}|grep Role|cut -f5)
+CONFIG_URL=$(cat /tmp/ec2-tags |grep Config|cut -f5)
+ROLE=$(cat /tmp/ec2-tags|grep Role|cut -f5)
 
-sudo mkdir -p /etc/facter/facts.d
-echo "role=${role}" /etc/facer/facts.d/role.txt
-echo "config_url=${config_url}" /etc/facer/facts.d/config_url.txt
+echo "role=$ROLE" /etc/facter/facts.d/role.txt
+echo "config_url=$CONFIG_URL" /etc/facter/facts.d/config_url.txt
 
-git clone ${config_url} /tmp/puppet
-sudo mv /tmp/puppet /etc/puppet
+sudo git clone $CONFIG_URL /etc/puppet
