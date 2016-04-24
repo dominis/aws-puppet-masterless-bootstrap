@@ -15,22 +15,22 @@ puppet apply --verbose --modulepath=/etc/puppet/modules /etc/puppet/manifests/si
 PUPPETSCRIPT
 
 node default {
-    file { '/usr/local/bin/puppet.sh':
-        content     => $puppetscript,
-        ensure      => file,
-        mode        => "0755",
-    }
+  file { '/usr/local/bin/puppet.sh':
+    content     => $puppetscript,
+    ensure      => file,
+    mode        => "0755",
+  }
 
-    cron { 'run puppet':
-        command => "/usr/local/bin/puppet.sh"
-    }
+  cron { 'run puppet':
+    command => "/usr/local/bin/puppet.sh"
+  }
 
-    file { '/etc/puppet':
-        ensure  => absent,
-    }
+  file { '/etc/puppet':
+    ensure  => absent,
+  }
 
-    file { '/etc/facter/facts.d':
-        ensure  => directory,
-        recurse => true,
-    }
+  file { '/etc/facter/facts.d':
+    ensure  => directory,
+    recurse => true,
+  }
 }
