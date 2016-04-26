@@ -14,8 +14,8 @@ EOF
 
 sudo mv /home/ubuntu/.ssh/config /root/.ssh/
 sudo mv /home/ubuntu/.ssh/id_rsa /root/.ssh/
-sudo chown root:root /root/.ssh/id_rsa
-sudo chmod 600 /root/.ssh/id_rsa
+sudo chown root:root -Rf /root/.ssh/
+sudo chmod 600 -Rf /root/.ssh/
 
 sudo puppet apply --verbose /tmp/bootstrap/site.pp
 
