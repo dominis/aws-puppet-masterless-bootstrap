@@ -26,7 +26,7 @@ ec2-describe-tags --filter "resource-id=${INSTANCE_ID}" --region ${REGION} > /tm
 CONFIG_URL=$(cat /tmp/ec2-tags |grep Config|cut -f5)
 ROLE=$(cat /tmp/ec2-tags|grep Role|cut -f5)
 
-echo "role=$ROLE" > /etc/facter/facts.d/role.txt
-echo "config_url=$CONFIG_URL" > /etc/facter/facts.d/config_url.txt
+sudo echo "role=$ROLE" > /etc/facter/facts.d/role.txt
+sudo echo "config_url=$CONFIG_URL" > /etc/facter/facts.d/config_url.txt
 
 sudo git clone $CONFIG_URL /etc/puppet
