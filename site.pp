@@ -1,6 +1,5 @@
 $puppetscript = @(PUPPETSCRIPT)
 #!/bin/bash
-set -e
 set -x
 cd /etc/puppet
 git clean -f
