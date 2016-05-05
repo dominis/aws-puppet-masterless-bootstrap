@@ -3,7 +3,7 @@ $puppetscript = @(PUPPETSCRIPT)
 set -x
 cd /etc/puppet
 git clean -f
-git reset
+git reset --hard HEAD
 git checkout .
 git pull origin master
 
@@ -21,7 +21,7 @@ node default {
   }
 
   cron { 'run puppet':
-    command => "/usr/local/bin/puppet.sh"
+    command => "/usr/local/bin/puppet.sh >> /var/log/puppet-fetch.log 2>&1"
   }
 
   file { '/etc/puppet':
