@@ -21,7 +21,7 @@ node default {
   }
 
   cron { 'run puppet':
-    command => "/usr/local/bin/puppet.sh >> /var/log/puppet-fetch.log 2>&1"
+    command => "sh /usr/local/bin/puppet.sh >> /var/log/puppet-fetch.log 2>&1"
   }
 
   file { '/etc/puppet':
