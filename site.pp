@@ -1,6 +1,7 @@
 $puppetscript = @(PUPPETSCRIPT)
 #!/bin/bash
 set -x
+/usr/bin/lockfile -l 300 /var/run/puppet-apply.lock || exit 1
 cd /etc/puppet
 git clean -f
 git reset --hard HEAD
@@ -11,6 +12,7 @@ librarian-puppet install --path=/etc/puppet/modules
 
 puppet apply --verbose --modulepath=/etc/puppet/modules /etc/puppet/site.pp
 
+rm -f /var/run/puppet-apply.lock
 PUPPETSCRIPT
 
 node default {
@@ -21,7 +23,7 @@ node default {
   }
 
   cron { 'run puppet':
-    command         => "sh /usr/local/bin/puppet.sh >> /var/log/puppet-fetch.log 2>&1",
+    command         => "sh /usr/local/bin/puppet.sh 2>&1 | logger",
     environment     => "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   }
 
