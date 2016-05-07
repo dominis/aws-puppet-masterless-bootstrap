@@ -31,6 +31,10 @@ node default {
     ensure  => absent,
   }
 
+  package { 'procmail':
+    ensure => installed,
+  }
+
   file { [
     '/etc/facter',
     '/etc/facter/facts.d',

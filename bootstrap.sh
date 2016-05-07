@@ -3,7 +3,7 @@ set -x
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update
 sudo apt-get dist-upgrade -u -y
-sudo apt-get install ec2-api-tools ruby ruby-dev gcc make procmail -y
+sudo apt-get install ec2-api-tools ruby ruby-dev gcc make -y
 sudo gem install puppet json librarian-puppet --no-ri --no-rdoc
 
 cat << EOF > ~/.ssh/config
