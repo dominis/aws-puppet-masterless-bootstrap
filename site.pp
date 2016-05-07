@@ -24,7 +24,8 @@ node default {
 
   cron { 'run puppet':
     command         => "sh /usr/local/bin/puppet.sh 2>&1 | logger",
-    environment     => "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    environment     => "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    minute          => "*/5",
   }
 
   file { '/etc/puppet':
