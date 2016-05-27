@@ -2,7 +2,7 @@ $puppetscript = @(PUPPETSCRIPT)
 #!/bin/bash
 set -x
 /usr/bin/lockfile -l 300 /var/run/puppet-apply.lock || exit 1
-cd /etc/puppet
+cd /usr/src/config/puppet
 git clean -f
 git reset --hard HEAD
 git checkout .
@@ -10,7 +10,7 @@ git pull origin master
 
 librarian-puppet install --path=/etc/puppet/modules
 
-puppet apply --verbose --modulepath=/etc/puppet/modules /etc/puppet/site.pp
+puppet apply --verbose --modulepath=/usr/src/config/puppet/modules /usr/src/config/puppet/site.pp
 
 rm -f /var/run/puppet-apply.lock
 PUPPETSCRIPT

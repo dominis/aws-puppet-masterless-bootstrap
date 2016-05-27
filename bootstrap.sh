@@ -30,6 +30,6 @@ ROLE=$(cat /tmp/ec2-tags|grep Role|cut -f5)
 sudo echo "role=$ROLE" > /etc/facter/facts.d/role.txt
 sudo echo "config_url=$CONFIG_URL" > /etc/facter/facts.d/config_url.txt
 
-sudo git clone $CONFIG_URL /etc/puppet
+sudo git clone $CONFIG_URL /usr/src/config
 
 sudo /usr/local/bin/puppet.sh
