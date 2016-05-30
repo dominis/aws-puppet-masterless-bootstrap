@@ -8,7 +8,7 @@ git reset --hard HEAD
 git checkout .
 git pull origin master
 
-librarian-puppet install --path=/etc/puppet/modules
+librarian-puppet install --path=/usr/src/config/puppet/modules
 
 puppet apply --verbose --modulepath=/usr/src/config/puppet/modules /usr/src/config/puppet/site.pp
 
